@@ -102,7 +102,7 @@ class VideoDepthAnything(nn.Module):
                 cur_input[:, :OVERLAP, ...] = pre_input[:, KEYFRAMES, ...]
 
             with torch.no_grad():
-                with torch.autocast(device_type=device, enabled=(not fp32)):
+                with torch.autocast(device_type=device[0:4], enabled=(not fp32)):
                     depth = self.forward(cur_input) # depth shape: [1, T, H, W]
 
             depth = depth.to(cur_input.dtype)
